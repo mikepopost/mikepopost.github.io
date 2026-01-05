@@ -1081,19 +1081,32 @@
 	</footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function () {
-	$('a[href^="#"]').click(function () {
-			$('html, body').animate({
-				scrollTop: $('[name="' + $.attr(this, 'href').substr(1) + '"]').offset().top
-			}, 500);
-			return false;
+	<script type="text/javascript">
+	$(document).ready(function () {
+		// Smooth scroll code
+		$('a[href^="#"]').click(function () {
+				$('html, body').animate({
+					scrollTop: $('[name="' + $.attr(this, 'href').substr(1) + '"]').offset().top
+				}, 500);
+				return false;
+		});
+
+		// NEW FIX: Stop Video on Modal Close
+		// This listens for the Bootstrap 'hidden' event
+		$('.modal').on('hidden.bs.modal', function () {
+			var $iframe = $(this).find('iframe');
+			if ($iframe.length > 0) {
+				var currentSrc = $iframe.attr('src');
+				// This resets the source, killing the audio/video instantly
+				$iframe.attr('src', ''); 
+				$iframe.attr('src', currentSrc);
+			}
+		});
 	});
-});
-</script>
+	</script>
 </body>
 
 </html>
